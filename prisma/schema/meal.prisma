@@ -1,0 +1,23 @@
+model Meal {
+    id          String   @id @default(uuid())
+    providerId  String
+    categoryId  String
+    name        String   @db.VarChar(150)
+    description String?  @db.Text
+    price       Decimal  @db.Decimal(10, 2)
+    imageUrl    String?  @db.VarChar(255)
+    dietaryTags String?  @db.VarChar(100)
+    isAvailable Boolean  @default(true)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    provider   ProviderProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+    category   Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+    cartItems  CartItem[]
+    orderItems OrderItem[]
+    reviews    Review[]
+
+    @@index([providerId])
+    @@index([categoryId])
+    @@map("meals")
+}

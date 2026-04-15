@@ -1,0 +1,13 @@
+model CartItem {
+    id        String   @id @default(uuid())
+    userId    String // better-auth (references User.id)
+    mealId    String
+    quantity  Int      @default(1)
+    createdAt DateTime @default(now())
+
+    meal Meal @relation(fields: [mealId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+    @@index([mealId])
+    @@map("cart_items")
+}
