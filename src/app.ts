@@ -21,8 +21,7 @@ app.use(express.json());
 
 app.all("/api/auth/*splat", toNodeHandler(auth));
 
-
-app.get("/", (req : any , res : any) => {
+app.get("/", (req: any, res: any) => {
   res.send("Hello , World!");
 });
 
