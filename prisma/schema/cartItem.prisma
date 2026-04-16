@@ -1,6 +1,6 @@
 model CartItem {
     id        String   @id @default(uuid())
-    userId    String // better-auth (references User.id)
+    userId    String 
     mealId    String
     quantity  Int      @default(1)
     createdAt DateTime @default(now())
