@@ -41,7 +41,13 @@ export const requireAuth = (...roles: UserRole[]) => {
         return res.status(401).json({ error: "Unauthorized. Please login." });
       }
 
-      if (roles.length > 0 && !roles.includes((session.user as any).role as UserRole)) {
+      console.log("SESSION USER:", session?.user);
+      console.log("SESSION ROLE:", (session?.user as any)?.role);
+
+      if (
+        roles.length > 0 &&
+        !roles.includes(((session.user as any)?.role || UserRole.CUSTOMER) as UserRole)
+      ) {
         return res.status(403).json({
           error:
             "Forbidden. You do not have permission to access this resource.",

@@ -1,4 +1,4 @@
-import { Category } from "../../../generated/prisma";
+import { Category } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const getAllCategories = async () => {
