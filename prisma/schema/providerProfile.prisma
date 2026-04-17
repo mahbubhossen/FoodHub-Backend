@@ -1,6 +1,6 @@
 model ProviderProfile {
     id             String   @id @default(uuid())
-    userId         String   @unique // better-auth (references User.id)
+    userId         String   @unique 
     restaurantName String   @db.VarChar(150)
     description    String?  @db.Text
     logoUrl        String?  @db.VarChar(255)
