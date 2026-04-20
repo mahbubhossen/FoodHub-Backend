@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { OrderStatus } from "../../../generated/prisma";
+import { OrderStatus } from "../../../generated/prisma/enums";
 import { orderService } from "./orders.service";
 
 // ─── Customer ──────────────────────────────────────────────────────────────
@@ -16,7 +16,7 @@ const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     );
     res.status(201).json(result);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
@@ -36,7 +36,7 @@ const getOrderById = async (
 ) => {
   try {
     const result = await orderService.getOrderById(
-      req.params.orderId,
+      req.params.orderId as string,
       req.user!.id,
       req.user!.role,
     );
@@ -49,7 +49,7 @@ const getOrderById = async (
 const cancelOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await orderService.cancelOrder(
-      req.params.orderId,
+      req.params.orderId as string,
       req.user!.id,
     );
     res.status(200).json(result);
@@ -85,7 +85,7 @@ const updateOrderStatus = async (
       return res.status(400).json({ error: "status is required." });
     }
     const result = await orderService.updateOrderStatus(
-      req.params.orderId,
+      req.params.orderId as string,
       status as OrderStatus,
       req.user!.id,
     );

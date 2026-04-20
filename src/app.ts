@@ -5,8 +5,9 @@ import { auth } from "./lib/auth";
 import errorHandler from "./middlewares/globalErrorHandler";
 import { notFound } from "./middlewares/notFound";
 import { categoryRouter } from "./modules/category/categories.route";
-import { providerRouter } from "./modules/providers/providers.route";
 import { mealRouter } from "./modules/meals/meals.route";
+import { orderRouter } from "./modules/orders/orders.route";
+import { providerRouter } from "./modules/providers/providers.route";
 
 const app: Application = express();
 
@@ -26,7 +27,8 @@ app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use("/api/categories", categoryRouter);
 app.use("/api/providers", providerRouter);
-app.use("/api/meals", mealRouter)
+app.use("/api/meals", mealRouter);
+app.use("/api/orders", orderRouter);
 
 app.get("/", (req: any, res: any) => {
   res.send("Hello , World!");

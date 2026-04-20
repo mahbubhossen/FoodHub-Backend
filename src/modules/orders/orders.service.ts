@@ -1,4 +1,4 @@
-import { OrderStatus } from "../../../generated/prisma";
+import { OrderStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 
 // ─── Customer ──────────────────────────────────────────────────────────────
@@ -31,6 +31,9 @@ const createOrder = async (userId: string, deliveryAddress: string) => {
   }
 
   const providerId = providerIds[0];
+  if (!providerId) {
+    throw new Error("Unable to determine the provider for the order.");
+  }
 
   // Verify all meals are still available
   for (const item of cartItems) {
