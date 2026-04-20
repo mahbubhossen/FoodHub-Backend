@@ -1,4 +1,4 @@
-import { Meal } from "../../../generated/prisma";
+import { Meal } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
 // ─── Public ────────────────────────────────────────────────────────────────

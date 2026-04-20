@@ -13,17 +13,16 @@ const getAllMeals = async (req: Request, res: Response, next: NextFunction) => {
       : "createdAt";
     const sortOrder = req.query.sortOrder === "asc" ? "asc" : "desc";
 
+    const { search, categoryId, providerId, dietaryTags, minPrice, maxPrice } =
+      req.query;
+
     const result = await mealService.getAllMeals({
-      search: req.query.search as string | undefined ,
-      categoryId: req.query.categoryId as string | undefined,
-      providerId: req.query.providerId as string | undefined,
-      dietaryTags: req.query.dietaryTags as string | undefined,
-      minPrice: req.query.minPrice
-        ? parseFloat(req.query.minPrice as string)
-        : undefined,
-      maxPrice: req.query.maxPrice
-        ? parseFloat(req.query.maxPrice as string)
-        : undefined,
+      ...(search && { search: search as string }),
+      ...(categoryId && { categoryId: categoryId as string }),
+      ...(providerId && { providerId: providerId as string }),
+      ...(dietaryTags && { dietaryTags: dietaryTags as string }),
+      ...(minPrice && { minPrice: parseFloat(minPrice as string) }),
+      ...(maxPrice && { maxPrice: parseFloat(maxPrice as string) }),
       page,
       limit,
       skip,
@@ -39,7 +38,7 @@ const getAllMeals = async (req: Request, res: Response, next: NextFunction) => {
 
 const getMealById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await mealService.getMealById(req.params.mealId);
+    const result = await mealService.getMealById(req.params.mealId as string);
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -58,7 +57,7 @@ const createMeal = async (req: Request, res: Response, next: NextFunction) => {
 const updateMeal = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await mealService.updateMeal(
-      req.params.mealId,
+      req.params.mealId as string,
       req.body,
       req.user!.id,
     );
@@ -70,7 +69,7 @@ const updateMeal = async (req: Request, res: Response, next: NextFunction) => {
 
 const deleteMeal = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    await mealService.deleteMeal(req.params.mealId, req.user!.id);
+    await mealService.deleteMeal(req.params.mealId as string, req.user!.id);
     res.status(200).json({ message: "Meal deleted successfully." });
   } catch (error) {
     next(error);
