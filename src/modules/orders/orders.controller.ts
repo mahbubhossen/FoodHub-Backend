@@ -2,8 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { OrderStatus } from "../../../generated/prisma/enums";
 import { orderService } from "./orders.service";
 
-// ─── Customer ──────────────────────────────────────────────────────────────
-
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { deliveryAddress } = req.body;
@@ -57,8 +55,6 @@ const cancelOrder = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
-
-// ─── Provider ──────────────────────────────────────────────────────────────
 
 const getProviderOrders = async (
   req: Request,

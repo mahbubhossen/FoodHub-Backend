@@ -14,7 +14,6 @@ const getDashboardStats = async (
   }
 };
 
-// ─── Users ─────────────────────────────────────────────────────────────────
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -68,7 +67,6 @@ const updateUserStatus = async (
   }
 };
 
-// ─── Orders ────────────────────────────────────────────────────────────────
 
 const getAllOrders = async (
   req: Request,

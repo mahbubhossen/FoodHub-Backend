@@ -4,18 +4,8 @@ import { ProviderController } from "./providers.controller";
 
 const router = Router();
 
-// ─── Public ────────────────────────────────────────────────────────────────
-// GET /api/providers              → browse all providers
-// GET /api/providers/:providerId  → single provider with full menu
-
 router.get("/", ProviderController.getAllProviders);
 router.get("/:providerId", ProviderController.getProviderById);
-
-// ─── Provider (own account) ────────────────────────────────────────────────
-// GET    /api/providers/me/profile    → view own profile
-// GET    /api/providers/me/dashboard  → dashboard stats
-// POST   /api/providers/me/profile    → create profile (once)
-// PATCH  /api/providers/me/profile    → update profile
 
 router.get(
   "/me/profile",

@@ -4,13 +4,6 @@ import { CartController } from "./cart.controller";
 
 const router = Router();
 
-// All cart routes are customer-only
-// GET    /api/cart                       → view cart
-// POST   /api/cart                       → add item to cart
-// PATCH  /api/cart/:cartItemId           → update item quantity
-// DELETE /api/cart/:cartItemId           → remove single item
-// DELETE /api/cart                       → clear entire cart
-
 router.get("/", requireAuth(UserRole.CUSTOMER), CartController.getCart);
 router.post("/", requireAuth(UserRole.CUSTOMER), CartController.addToCart);
 router.patch(

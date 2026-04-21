@@ -1,13 +1,7 @@
 import { OrderStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 
-// ─── Customer ──────────────────────────────────────────────────────────────
 
-/**
- * Creates an order from the customer's current cart.
- * All cart items must belong to the same provider.
- * Clears the cart after successful order creation.
- */
 const createOrder = async (userId: string, deliveryAddress: string) => {
   const cartItems = await prisma.cartItem.findMany({
     where: { userId },

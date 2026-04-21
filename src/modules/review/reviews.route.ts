@@ -4,14 +4,7 @@ import { ReviewController } from "./reviews.controller";
 
 const router = Router();
 
-// ─── Public ────────────────────────────────────────────────────────────────
-// GET /api/reviews/meal/:mealId   → paginated reviews for a specific meal
-
 router.get("/meal/:mealId", ReviewController.getMealReviews);
-
-// ─── Customer ──────────────────────────────────────────────────────────────
-// POST   /api/reviews             → submit a review (must be delivered order)
-// GET    /api/reviews/my          → customer's own review history
 
 router.post("/", requireAuth(UserRole.CUSTOMER), ReviewController.createReview);
 router.get(

@@ -1,7 +1,6 @@
 import { OrderStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 
-// ─── Users ─────────────────────────────────────────────────────────────────
 
 const getAllUsers = async (query: {
   search?: string;
@@ -88,7 +87,6 @@ const updateUserStatus = async (
   });
 };
 
-// ─── Orders ────────────────────────────────────────────────────────────────
 
 const getAllOrders = async (query: {
   status?: string;
@@ -132,7 +130,6 @@ const getAllOrders = async (query: {
   };
 };
 
-// ─── Dashboard stats ───────────────────────────────────────────────────────
 
 const getDashboardStats = async () => {
   return prisma.$transaction(async (tx) => {

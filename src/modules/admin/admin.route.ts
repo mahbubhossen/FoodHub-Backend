@@ -4,21 +4,12 @@ import { AdminController } from "./admin.controller";
 
 const router = Router();
 
-// All admin routes are protected — ADMIN role only
-
-// ─── Dashboard ─────────────────────────────────────────────────────────────
-// GET /api/admin/stats   → platform-wide statistics
 
 router.get(
   "/stats",
   requireAuth(UserRole.ADMIN),
   AdminController.getDashboardStats,
 );
-
-// ─── Users ─────────────────────────────────────────────────────────────────
-// GET   /api/admin/users              → all users (search, filter by role/status)
-// GET   /api/admin/users/:userId      → single user detail with provider profile
-// PATCH /api/admin/users/:userId      → suspend or activate a user
 
 router.get("/users", requireAuth(UserRole.ADMIN), AdminController.getAllUsers);
 router.get(
@@ -32,8 +23,6 @@ router.patch(
   AdminController.updateUserStatus,
 );
 
-// ─── Orders ────────────────────────────────────────────────────────────────
-// GET /api/admin/orders   → all orders (filter by status, customer, provider)
 
 router.get(
   "/orders",

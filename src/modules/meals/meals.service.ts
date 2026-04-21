@@ -1,8 +1,6 @@
 import { Meal } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 
-// ─── Public ────────────────────────────────────────────────────────────────
-
 const getAllMeals = async (query: {
   search?: string;
   categoryId?: string;
@@ -100,8 +98,6 @@ const getMealById = async (mealId: string) => {
   });
   return meal;
 };
-
-// ─── Provider ──────────────────────────────────────────────────────────────
 
 const createMeal = async (
   data: Omit<Meal, "id" | "createdAt" | "updatedAt" | "providerId">,
