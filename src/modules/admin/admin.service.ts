@@ -1,4 +1,4 @@
-import { OrderStatus } from "../../../generated/prisma";
+import { OrderStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 
 // ─── Users ─────────────────────────────────────────────────────────────────

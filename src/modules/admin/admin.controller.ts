@@ -22,9 +22,9 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     const limit = parseInt(req.query.limit as string) || 10;
 
     const result = await adminService.getAllUsers({
-      search: req.query.search as string | undefined,
-      role: req.query.role as string | undefined,
-      status: req.query.status as string | undefined,
+      search: req.query.search as string,
+      role: req.query.role as string,
+      status: req.query.status as string,
       page,
       limit,
       skip: (page - 1) * limit,
@@ -37,7 +37,7 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
 
 const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const result = await adminService.getUserById(req.params.userId);
+    const result = await adminService.getUserById(req.params.userId as string);
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -59,7 +59,7 @@ const updateUserStatus = async (
     }
 
     const result = await adminService.updateUserStatus(
-      req.params.userId,
+      req.params.userId as string,
       status,
     );
     res.status(200).json(result);
@@ -80,9 +80,9 @@ const getAllOrders = async (
     const limit = parseInt(req.query.limit as string) || 10;
 
     const result = await adminService.getAllOrders({
-      status: req.query.status as string | undefined,
-      customerId: req.query.customerId as string | undefined,
-      providerId: req.query.providerId as string | undefined,
+      ...(req.query.status && { status: req.query.status as string }),
+      ...(req.query.customerId && { customerId: req.query.customerId as string }),
+      ...(req.query.providerId && { providerId: req.query.providerId as string }),
       page,
       limit,
       skip: (page - 1) * limit,

@@ -4,6 +4,7 @@ import express, { Application } from "express";
 import { auth } from "./lib/auth";
 import errorHandler from "./middlewares/globalErrorHandler";
 import { notFound } from "./middlewares/notFound";
+import { adminRouter } from "./modules/admin/admin.route";
 import { cartRouter } from "./modules/cart/cart.route";
 import { categoryRouter } from "./modules/category/categories.route";
 import { mealRouter } from "./modules/meals/meals.route";
@@ -33,6 +34,7 @@ app.use("/api/meals", mealRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/admin", adminRouter);
 
 app.get("/", (req: any, res: any) => {
   res.send("Hello , World!");
