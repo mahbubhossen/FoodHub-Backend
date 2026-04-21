@@ -28,7 +28,7 @@ const updateCartItem = async (
   try {
     const { quantity } = req.body;
     const result = await cartService.updateCartItem(
-      req.params.cartItemId,
+      req.params.cartItemId as string,
       req.user!.id,
       quantity,
     );
@@ -44,7 +44,10 @@ const removeCartItem = async (
   next: NextFunction,
 ) => {
   try {
-    await cartService.removeCartItem(req.params.cartItemId, req.user!.id);
+    await cartService.removeCartItem(
+      req.params.cartItemId as string,
+      req.user!.id,
+    );
     res.status(200).json({ message: "Item removed from cart." });
   } catch (error) {
     next(error);

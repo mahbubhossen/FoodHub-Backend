@@ -41,8 +41,8 @@ export const requireAuth = (...roles: UserRole[]) => {
         return res.status(401).json({ error: "Unauthorized. Please login." });
       }
 
-      console.log("SESSION USER:", session?.user);
-      console.log("SESSION ROLE:", (session?.user as any)?.role);
+      // console.log("SESSION USER:", session?.user);
+      // console.log("SESSION ROLE:", (session?.user as any)?.role);
 
       if (
         roles.length > 0 &&
