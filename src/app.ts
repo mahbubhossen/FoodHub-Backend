@@ -9,6 +9,7 @@ import { categoryRouter } from "./modules/category/categories.route";
 import { mealRouter } from "./modules/meals/meals.route";
 import { orderRouter } from "./modules/orders/orders.route";
 import { providerRouter } from "./modules/providers/providers.route";
+import { reviewRouter } from "./modules/review/reviews.route";
 
 const app: Application = express();
 
@@ -31,6 +32,7 @@ app.use("/api/providers", providerRouter);
 app.use("/api/meals", mealRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/reviews", reviewRouter);
 
 app.get("/", (req: any, res: any) => {
   res.send("Hello , World!");

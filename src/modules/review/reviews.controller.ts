@@ -11,7 +11,7 @@ const createReview = async (
     const result = await reviewService.createReview(req.user!.id, req.body);
     res.status(201).json(result);
   } catch (error) {
-    next(error);
+    console.log(error);
   }
 };
 
@@ -24,11 +24,14 @@ const getMealReviews = async (
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
 
-    const result = await reviewService.getMealReviews(req.params.mealId, {
-      page,
-      limit,
-      skip: (page - 1) * limit,
-    });
+    const result = await reviewService.getMealReviews(
+      req.params.mealId as string,
+      {
+        page,
+        limit,
+        skip: (page - 1) * limit,
+      },
+    );
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -56,7 +59,7 @@ const deleteReview = async (
   try {
     const isAdmin = req.user!.role === UserRole.ADMIN;
     await reviewService.deleteReview(
-      req.params.reviewId,
+      req.params.reviewId as string,
       req.user!.id,
       isAdmin,
     );

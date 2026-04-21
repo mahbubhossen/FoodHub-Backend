@@ -43,8 +43,16 @@ const createReview = async (
     throw new Error("You have already reviewed this meal for this order.");
   }
 
+  const commentValue = comment ?? null;
+
   return prisma.review.create({
-    data: { customerId: userId, orderId, mealId, rating, comment },
+    data: {
+      customerId: userId,
+      orderId,
+      mealId,
+      rating,
+      comment: commentValue,
+    },
     include: {
       meal: { select: { id: true, name: true } },
     },
