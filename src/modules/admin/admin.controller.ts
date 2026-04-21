@@ -1,0 +1,102 @@
+import { NextFunction, Request, Response } from "express";
+import { adminService } from "./admin.service";
+
+const getDashboardStats = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await adminService.getDashboardStats();
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── Users ─────────────────────────────────────────────────────────────────
+
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const result = await adminService.getAllUsers({
+      search: req.query.search as string | undefined,
+      role: req.query.role as string | undefined,
+      status: req.query.status as string | undefined,
+      page,
+      limit,
+      skip: (page - 1) * limit,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getUserById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await adminService.getUserById(req.params.userId);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateUserStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { status } = req.body;
+
+    if (!status || !["ACTIVE", "SUSPENDED"].includes(status)) {
+      return res
+        .status(400)
+        .json({ error: "status must be one of: ACTIVE, SUSPENDED." });
+    }
+
+    const result = await adminService.updateUserStatus(
+      req.params.userId,
+      status,
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// ─── Orders ────────────────────────────────────────────────────────────────
+
+const getAllOrders = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    const result = await adminService.getAllOrders({
+      status: req.query.status as string | undefined,
+      customerId: req.query.customerId as string | undefined,
+      providerId: req.query.providerId as string | undefined,
+      page,
+      limit,
+      skip: (page - 1) * limit,
+    });
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const AdminController = {
+  getDashboardStats,
+  getAllUsers,
+  getUserById,
+  updateUserStatus,
+  getAllOrders,
+};
