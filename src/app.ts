@@ -1,6 +1,6 @@
 import { toNodeHandler } from "better-auth/node";
 import cors from "cors";
-import express, { Application } from "express";
+import express, { Application, Request, Response } from "express";
 import { auth } from "./lib/auth";
 import errorHandler from "./middlewares/globalErrorHandler";
 import { notFound } from "./middlewares/notFound";
@@ -36,8 +36,9 @@ app.use("/api/orders", orderRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/admin", adminRouter);
 
-app.get("/", ( res: any) => {
-  res.send("Hello , World!");
+app.get("/", (req: Request, res: Response) => {
+  res.send("Hello, World!");
+  console.log(req);
 });
 
 app.use(notFound);
