@@ -7,7 +7,11 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
-  trustedOrigins: [process.env.APP_URL!, "http://localhost:3000"],
+  trustedOrigins: [
+    process.env.APP_URL!,
+    "http://localhost:3000",
+    "https://foodhub-backend-ytu3.onrender.com", 
+  ],
 
   emailAndPassword: {
     enabled: true,
@@ -34,7 +38,7 @@ export const auth = betterAuth({
         ...session,
         user: {
           ...session.user,
-          role: (user as any).role, 
+          role: (user as any).role,
         },
       };
     },

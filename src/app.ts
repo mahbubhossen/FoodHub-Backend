@@ -19,8 +19,9 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
-      process.env.APP_URL || "http://localhost:4000",
+      process.env.APP_URL!,
       "http://localhost:3000",
+      "https://your-frontend.vercel.app",
     ],
     credentials: true,
   }),
