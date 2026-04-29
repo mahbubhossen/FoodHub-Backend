@@ -1,50 +1,59 @@
 import { Prisma } from "@prisma/client";
-import { Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 function errorHandler(
   err: any,
-
+  req: Request,
   res: Response,
+  next: NextFunction,
 ) {
+  console.error("🔥 GLOBAL ERROR:", err); // IMPORTANT
+
   let statusCode = 500;
   let errorMessage = "Internal Server Error";
-  let errorDetails = err;
 
-  // Prisma Client Validation Error
+  // Prisma Validation Error
   if (err instanceof Prisma.PrismaClientValidationError) {
     statusCode = 400;
-    errorMessage = "You provide incorrect field type or missing fields";
+    errorMessage = "Invalid data type or missing required fields";
   }
 
-  // prisma client known request error
+  // Prisma Known Errors
   else if (err instanceof Prisma.PrismaClientKnownRequestError) {
-    if (err.code === "P2025") {
-      statusCode = 400;
-      errorMessage =
-        "An operation failed because of depends on one or more seconds that were required but not found ";
-    } else if (err.code === "P2002") {
-      statusCode = 400;
-      errorMessage = " Duplicate key error";
-    } else if (err.code === "P2003") {
-      statusCode = 400;
-      errorMessage = "Foreign key constraint failed";
-    }
-  } else if (err instanceof Prisma.PrismaClientUnknownRequestError) {
-    statusCode = 500;
-    errorMessage = "Internal Server Error";
-  } else if (err instanceof Prisma.PrismaClientInitializationError) {
-    if (err.errorCode === "P1000") {
-      statusCode = 401;
-      errorMessage = "Authentication Failed . Please check your credentials ";
-    } else if (err.errorCode === "P1001") {
-      statusCode = 400;
-      errorMessage = "Cannot reach database server ";
+    switch (err.code) {
+      case "P2002":
+        statusCode = 400;
+        errorMessage = "Duplicate field value violates unique constraint";
+        break;
+
+      case "P2003":
+        statusCode = 400;
+        errorMessage = "Foreign key constraint failed";
+        break;
+
+      case "P2025":
+        statusCode = 404;
+        errorMessage = "Record not found";
+        break;
+
+      default:
+        statusCode = 400;
+        errorMessage = "Database error";
     }
   }
-  res.status(statusCode);
-  res.json({
+
+  // Prisma Connection Error
+  else if (err instanceof Prisma.PrismaClientInitializationError) {
+    statusCode = 500;
+    errorMessage = "Database connection failed";
+  }
+
+  res.status(statusCode).json({
+    success: false,
     message: errorMessage,
-    error: errorDetails,
+
+    // 🔥 IMPORTANT: show real error ONLY in dev
+    error: process.env.NODE_ENV === "production" ? undefined : err.message,
   });
 }
 
