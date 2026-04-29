@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
 function errorHandler(
   err: any,
@@ -7,8 +7,9 @@ function errorHandler(
   res: Response,
   next: NextFunction,
 ) {
-  console.error("🔥 GLOBAL ERROR:", err); // IMPORTANT
-
+  console.error("🔥 GLOBAL ERROR:", err);
+  console.log(req);
+  console.log(next);
   let statusCode = 500;
   let errorMessage = "Internal Server Error";
 
