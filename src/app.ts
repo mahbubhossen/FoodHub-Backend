@@ -36,7 +36,7 @@ app.use("/api/orders", orderRouter);
 app.use("/api/reviews", reviewRouter);
 app.use("/api/admin", adminRouter);
 
-app.get("/", (req: any, res: any) => {
+app.get("/", ( res: any) => {
   res.send("Hello , World!");
 });
 

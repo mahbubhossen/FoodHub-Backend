@@ -1,6 +1,5 @@
-import { ProviderProfile } from "../../../generated/prisma/client";
+import { ProviderProfile } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
-
 
 const getAllProviders = async (query: {
   search?: string;
@@ -63,7 +62,6 @@ const getProviderById = async (providerId: string) => {
   return provider;
 };
 
-
 const getMyProfile = async (userId: string) => {
   return prisma.providerProfile.findUniqueOrThrow({
     where: { userId },
@@ -105,7 +103,6 @@ const updateProfile = async (
     data,
   });
 };
-
 
 const getProviderDashboard = async (userId: string) => {
   const profile = await prisma.providerProfile.findUniqueOrThrow({

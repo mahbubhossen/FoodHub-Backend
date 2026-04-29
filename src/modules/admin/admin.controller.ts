@@ -8,6 +8,7 @@ const getDashboardStats = async (
 ) => {
   try {
     const result = await adminService.getDashboardStats();
+    console.log(req)
     res.status(200).json(result);
   } catch (error) {
     next(error);

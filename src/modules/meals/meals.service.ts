@@ -1,4 +1,4 @@
-import { Meal } from "../../../generated/prisma/client";
+import { Meal } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
 
 const getAllMeals = async (query: {

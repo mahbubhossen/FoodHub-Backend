@@ -8,6 +8,7 @@ const getAllCategories = async (
 ) => {
   try {
     const result = await categoryService.getAllCategories();
+    console.log(req)
     res.status(200).json(result);
   } catch (error) {
     next(error);

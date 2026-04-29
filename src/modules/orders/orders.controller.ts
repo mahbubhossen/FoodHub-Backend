@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { OrderStatus } from "../../../generated/prisma/enums";
-import { orderService } from "./orders.service";
 
-const createOrder = async (req: Request, res: Response, next: NextFunction) => {
+import { orderService } from "./orders.service";
+import { OrderStatus } from "@prisma/client";
+
+const createOrder = async (req: Request, res: Response,) => {
   try {
     const { deliveryAddress } = req.body;
     if (!deliveryAddress) {
@@ -73,7 +74,6 @@ const getProviderOrders = async (
 const updateOrderStatus = async (
   req: Request,
   res: Response,
-  next: NextFunction,
 ) => {
   try {
     const { status } = req.body;

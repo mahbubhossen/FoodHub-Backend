@@ -1,6 +1,5 @@
-import { OrderStatus } from "../../../generated/prisma/enums";
+import { OrderStatus } from "@prisma/client";
 import { prisma } from "../../lib/prisma";
-
 
 const getAllUsers = async (query: {
   search?: string;
@@ -59,14 +58,14 @@ const getUserById = async (userId: string) => {
       phone: true,
       address: true,
       createdAt: true,
-      providerProfile: {
-        select: {
-          id: true,
-          restaurantName: true,
-          isOpen: true,
-          _count: { select: { meals: true, orders: true } },
-        },
-      },
+      // providerProfile: {
+      //   select: {
+      //     id: true,
+      //     restaurantName: true,
+      //     isOpen: true,
+      //     _count: { select: { meals: true, orders: true } },
+      //   },
+      // },
     },
   });
 };
@@ -86,7 +85,6 @@ const updateUserStatus = async (
     select: { id: true, name: true, email: true, role: true, status: true },
   });
 };
-
 
 const getAllOrders = async (query: {
   status?: string;
@@ -129,7 +127,6 @@ const getAllOrders = async (query: {
     pagination: { total, page, limit, totalPages: Math.ceil(total / limit) },
   };
 };
-
 
 const getDashboardStats = async () => {
   return prisma.$transaction(async (tx) => {

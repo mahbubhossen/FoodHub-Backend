@@ -8,7 +8,7 @@ const router = Router();
 router.get(
   "/stats",
   requireAuth(UserRole.ADMIN),
-  AdminController.getDashboardStats,
+  AdminController.getDashboardStats
 );
 
 router.get("/users", requireAuth(UserRole.ADMIN), AdminController.getAllUsers);
