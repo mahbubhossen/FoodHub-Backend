@@ -15,13 +15,12 @@ function errorHandler(
 
   const statusCode = err?.status || err?.statusCode || 500;
 
-  return res.status(statusCode).json({
-    success: false,
-    message: err?.message || "Internal Server Error",
-    name: err?.name,
-    stack: process.env.NODE_ENV === "production" ? undefined : err?.stack,
-    fullError: process.env.NODE_ENV === "production" ? undefined : err,
-  });
+ res.status(statusCode).json({
+  success: false,
+  message: err,
+  error: err.message,
+  stack: err.stack,
+});
 }
 
 export default errorHandler;
