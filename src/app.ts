@@ -28,11 +28,11 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  console.log("➡️ REQUEST:", req.method, req.url , res);
+  console.log("➡️ REQUEST:", req.method, req.url, res);
   next();
 });
 
-app.all("/api/auth/", toNodeHandler(auth));
+app.use("/api/auth/", toNodeHandler(auth));
 
 app.use("/api/categories", categoryRouter);
 app.use("/api/providers", providerRouter);
