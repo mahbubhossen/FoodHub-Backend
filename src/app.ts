@@ -44,7 +44,7 @@ app.use("/api/admin", adminRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");
-  console.log(req);
+  console.log(`Request: ${req.method} ${req.url}`);
 });
 
 app.use(notFound);
