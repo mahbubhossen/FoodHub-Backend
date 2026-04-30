@@ -37,6 +37,8 @@ export const requireAuth = (...roles: UserRole[]) => {
         headers: req.headers as any,
       });
 
+      console.log("🔥 SESSION DEBUG:", session);
+
       if (!session?.user) {
         return res.status(401).json({ error: "Unauthorized. Please login." });
       }
@@ -46,7 +48,9 @@ export const requireAuth = (...roles: UserRole[]) => {
 
       if (
         roles.length > 0 &&
-        !roles.includes(((session.user as any)?.role || UserRole.CUSTOMER) as UserRole)
+        !roles.includes(
+          ((session.user as any)?.role || UserRole.CUSTOMER) as UserRole,
+        )
       ) {
         return res.status(403).json({
           error:
